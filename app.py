@@ -28,9 +28,9 @@ all_df_agGrp, all_df_Summary = transform_df()
 st.sidebar.header("Filter by Region:")
 Region = st.sidebar.multiselect(
     "Select Region(s) below to view :",
-    options=all_df_agGrp['REGION_NAME'].unique(),
-    # default=
-    default=['Canada']
+    options=all_df_Summary['REGION_NAME'].unique(),
+    default=all_df_Summary['REGION_NAME'].unique()[0]
+    # default=['Canada']
 )
 
 Age_Group = st.sidebar.multiselect(
@@ -40,6 +40,7 @@ Age_Group = st.sidebar.multiselect(
 )
 
 df_selection = all_df_agGrp.query("REGION_NAME == @Region & DIMENSIONS == @Age_Group")
+total_pop = all_df_Summary.query("REGION_NAME == @Region & DIMENSIONS == 'Population, 2021'")
 df_summ_selection = all_df_Summary.query(
     "REGION_NAME == @Region & DIMENSIONS == 'Population density per square kilometre'"
 )
@@ -62,7 +63,7 @@ st.plotly_chart(fig_pop_age_grp, use_container_width=True)
 
 # st.markdown("---")
 
-total_population = int(df_selection['TOTAL_COUNT'].sum())
+total_population = int(total_pop['TOTAL_COUNT'].sum())
 pop_density = int(df_summ_selection['TOTAL_COUNT'].sum())
 pop_chg_perc = int(df_summ_selection_chg['TOTAL_COUNT'].sum())
 
