@@ -19,7 +19,7 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-st.title(":flag-ca: Canada Population Dashboard")
+st.title("Canada Population Dashboard")
 all_df_agGrp, all_df_Summary = transform_df()
 
 # st.dataframe(all_df_agGrp)
